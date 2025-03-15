@@ -39,6 +39,113 @@ Banks and financial institutions face significant challenges in assessing credit
 * Cleaned and preprocessed the data by handling missing values and removing inconsistencies.
 * Standardized key metrics to ensure accurate analysis and modeling.
 
+## Bad Loan Application 
+
+     CALCULATE(
+     COUNT(financial_loan[id]),
+     FILTER(
+      financial_loan,
+      financial_loan[loan_status] IN {"Charged Off"}
+      )
+      )    
+
+
+## Bad Loan Funded Amount  
+
+       CALCULATE(
+      SUM(financial_loan[loan_amount]),
+      FILTER(
+      financial_loan,
+      financial_loan[loan_status] IN {"Charged Off"}
+      )
+      )
+
+## Bad Loan Percentage 
+
+     DIVIDE(
+      CALCULATE(
+        COUNT(financial_loan[id]),
+        financial_loan[loan_status] IN {"Charged Off"}
+        ),
+       COUNT(financial_loan[id]),
+         0
+       ) * 100
+
+       
+## Bad Loan Total Received 
+
+       CALCULATE(
+       SUM(financial_loan[total_payment]),
+       FILTER(
+       financial_loan,
+       financial_loan[loan_status] IN {"Charged Off"}
+       )
+       )
+
+## Good Loan Application 
+
+       CALCULATE(
+       COUNT([id]),
+       FILTER(
+       'financial_loan',
+       'financial_loan'[loan_status] IN {"Fully Paid", "Current"}
+       )
+       )
+
+
+## Good Loan Funded Amount  
+
+
+       CALCULATE(
+       SUM(fin ancial_loan[loan_amount]),
+       FILTER(
+       financial_loan,
+       financial_loan[loan_status] IN {"Fully Paid", "Current"}
+       )
+       )
+
+
+## Good Loan Percentage 
+
+        DIVIDE(
+       CALCULATE(
+       COUNT(financial_loan[id]),
+       financial_loan[loan_status] IN {"Fully Paid", "Current"}
+       ),
+       COUNT(financial_loan[id]),
+       0
+       ) * 100
+
+       
+## Good  Loan Total Received 
+
+       CALCULATE(
+       SUM(financial_loan[total_payment]),
+       FILTER(
+       financial_loan,
+       financial_loan[loan_status] IN {"Fully Paid", "Current"}
+       )
+       )
+
+
+## MTD Amount Received =
+      
+       
+       CALCULATE(
+       SUM(financial_loan[total_payment]),
+       DATESMTD(financial_loan[last_payment_date])
+       )
+
+
+## MTD Funded Amount =
+
+
+       CALCULATE(
+       SUM(financial_loan[loan_amount]),
+       DATESMTD(financial_loan[issue_date])
+       )
+
+       
 ---
 
 ### **5. Dashboard**
@@ -113,6 +220,8 @@ Banks and financial institutions face significant challenges in assessing credit
 
 ### **7. Conclusion**
 
-The analysis highlights key factors influencing loan repayment and default rates. By incorporating data-driven decision-making, banks can optimize loan approval processes and reduce financial risks. Implementing stricter credit score thresholds, offering flexible repayment plans, and promoting auto-debit payments can significantly improve loan performance.
+
+  The analysis highlights key factors influencing loan repayment and default rates. By incorporating data-driven decision-making, banks can optimize loan approval processes and reduce financial 
+  risks.Implementing stricter credit score thresholds, offering flexible repayment plans, and promoting auto-debit payments can significantly improve loan performance.
 ---
 
